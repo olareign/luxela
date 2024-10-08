@@ -48,7 +48,7 @@ export class UserRepo {
       await this.model.doc().set(data);
       const { otpCode, ...userData } = await this.getUserByMail(payload.email);
       return userData;
-    } catch (error) {
+    } catch (error: Error | any) {
       throw new CustomAPIError(`Failed to create seller account: ${error.message}`,
         500
       );
@@ -70,7 +70,7 @@ export class UserRepo {
       await this.model.doc().set(data);
       const userData = await this.getUserByMail(payload.email);
       return userData;
-    } catch (error) {
+    } catch (error: Error | any) {
       throw new CustomAPIError(`Failed to create seller account: ${error.message}`,
         500
       );
@@ -88,7 +88,7 @@ export class UserRepo {
       const snapshot = await this.model.where("email", "==", email).get();
       const userdoc = snapshot.docs[0];
       return { id: userdoc.id, ...userdoc.data() };
-    } catch (error) {
+    } catch (error: Error | any) {
       throw new CustomAPIError(`Failed to fetch user data: ${error.message}`,
         500
       );
@@ -108,7 +108,7 @@ export class UserRepo {
         return false;
       }
       return true;
-    } catch (error) {
+    } catch (error: Error | any) {
       throw new CustomAPIError(`Failed to check if user exist: ${error.message}`,
         500
       );
@@ -126,7 +126,7 @@ export class UserRepo {
       const snapshot = await this.model.doc(id).get();
       if (!snapshot.data()) return null;
       return { id: snapshot.id, ...snapshot.data() };
-    } catch (error) {
+    } catch (error: Error | any) {
       console.error("{Error} fetching single user:", error.message);
       throw new CustomAPIError(`Failed to fetch user: ${error.message}`, 500);
     }
@@ -140,7 +140,7 @@ export class UserRepo {
     try {
       const snapshot = await this.model.get();
       return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-    } catch (error) {
+    } catch (error: Error | any) {
       console.error("{Error} fetching all users:", error.message);
       throw new CustomAPIError(`Failed to fetch users: ${error.message}`, 500);
     }
@@ -156,7 +156,7 @@ export class UserRepo {
     try {
       const response = await this.model.doc(id).update(payload);
       return response;
-    } catch (error) {
+    } catch (error: Error | any) {
       console.error("Error updating user:", error.message);
       throw new CustomAPIError(`Failed to update user: ${error.message}`, 500);
     }
@@ -170,7 +170,7 @@ export class UserRepo {
     try {
       const response = await this.model.doc(userId).delete();
       return response;
-    } catch (error) {
+    } catch (error: Error | any) {
       console.error("Error deleting user:", error.message);
       throw new CustomAPIError(`Failed to delete user: ${error.message}`, 500);
     }
