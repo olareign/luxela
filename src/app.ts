@@ -7,7 +7,7 @@ import fileUpload from 'express-fileupload';
 const app: Application = express()
 
 import {notFound} from './errors/PageNotFound'
-import { errorHandler } from './utils/errorHandler.utils';
+import errorHandler from './utils/errorHandler.utils';
 import userRoute from './Authentication/routes/auth.routes';
 // import { AppConfig } from './config/app.config';
 import { cloudinaryConfig } from './config/cloudinary/config.firebase';
