@@ -90,13 +90,11 @@ const htmlcontent = (data: {code: string, username: string}) => {
 <body style="font-family: Arial, Tahoma, Geneva, Verdana, sans-serif; -webkit-font-smoothing: antialiased; -ms-text-size-adjust: 100%; width: 100% !important; height: 100% !important; margin: 0; padding: 0; -webkit-linear-gradient(135deg, #ffffff 0%, #ffffff 100%); background-repeat: repeat-x; filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ffffff', GradientType=1);">
     <center>
         <table cellpadding="0" cellspacing="0" border="0" align="center" style="width: 100%; max-width: 580px; margin: 0 auto !important;">
-            <tr>import default from './../../node_modules/engine.io-client/build/esm-debug/browser-entrypoint';
-
                 <td bgcolor="#ffffff" style="padding:20px;">
                     <table cellpadding="0" cellspacing="0" border="0" align="center">
                         <tr>
                             <td align="center" style="padding:0; margin:0;">
-                                <img src="https://example.com/logo.png" alt="Logo" width="150" height="50" style="display:block; outline:none; text-decoration:none; -ms-interlace:interlace; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;" />
+                                <img src="https://pbs.twimg.com/profile_images/1843692316885671936/wfJzTyfx_400x400.jpg" alt="Logo" width="150" height="50" style="display:block; outline:none; text-decoration:none; -ms-interlace:interlace; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;" />
                             </td>
                         </tr>
                         <tr>
@@ -118,7 +116,6 @@ const htmlcontent = (data: {code: string, username: string}) => {
                         </tr>
                     </table>
                 </td>
-            </tr>
         </table>
     </center>
 </body>
