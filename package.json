@@ -20,6 +20,7 @@
     "@solana/web3.js": "^1.95.3",
     "@types/body-parser": "^1.19.5",
     "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
     "@types/nodemailer": "^6.4.16",
     "@types/uuid": "^10.0.0",
     "@web3auth/default-solana-adapter": "^9.1.0",
