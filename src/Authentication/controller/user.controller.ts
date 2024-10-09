@@ -39,9 +39,7 @@ class User {
     */
 async signIn(req: Request, res: Response, next: NextFunction): Promise<void | any> {
   try {
-      if(!req.body.email.includes('@')) throw new BadRequestAPIError('Submit a valid email address!')
-          else if(!req.body.role) throw new BadRequestAPIError('User role is required!')
-      
+      if(!req.body.email.includes('@')) throw new BadRequestAPIError('Submit a valid email address!')      
       const data = await service.signIn(req.body)
       return responseHandler({
           res, 
@@ -111,25 +109,6 @@ async signIn(req: Request, res: Response, next: NextFunction): Promise<void | an
       });
     } catch (error: Error | any) {
       next(error);
-    }
-  }
-
-  async login(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<void | any> {
-    try {
-      const userId = req.body.userId;
-      const result = await service.fetch(userId as string);
-      return responseHandler({
-        res,
-        StatusCodes: StatusCodes.CREATED,
-        message: "Image uploaded successfully!",
-        data: result,
-      });
-    } catch (e: Error | any) {
-      next(e);
     }
   }
 
