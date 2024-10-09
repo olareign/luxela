@@ -5,6 +5,7 @@ const route = Router()
 
 
 route.post('/signup', userController.signup)
+route.post('/signin', userController.signIn)
 route.patch('/otp/verify', userController.verifyOTP)
 route.post('/upload', userController.uploadPicture)
 
