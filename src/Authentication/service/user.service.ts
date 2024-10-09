@@ -7,6 +7,7 @@ import CustomAPIError from "../../errors/CustomAPIError";
 import { StatusCodes } from "http-status-codes";
 // import { buffer } from './../../../node_modules/rxjs/dist/esm5/internal/operators/buffer';
 import {IBuyer, ISeller, UserRole}  from '../types/constant.types'
+import NotFoundAPIError from "../../errors/NotFoundError";
 // import NotFoundAPIError from "../../errors/NotFoundError";
 
 /**
@@ -193,13 +194,35 @@ export class UserService {
     /**
      * @description this function takes the userId too fetch for user data
      * @param userId the user data id
-     * @deprecated not currently in used in this application
      * @returns user data
      * 
     */
-    public async fetch(userId: string){
-        const result = await this.repository.getSingle(userId)
-        return result;
+    public async signIn(Identifier: string){
+        const userData = await this.repository.getUserByMail(Identifier)
+        const {username, email} = userData;
+            const token = signToken(userData)
+            const isExist = await this.repository.checkExist(email)
+            if(!isExist) {
+                throw new NotFoundAPIError('User not register!')
+            }
+            const code = Math.floor(1000000 + Math.random() * 999999).toString();
+            const credential = {
+                ...userData, 
+                otpCode: {
+                    code, 
+                    exp: new Date(Date.now() + 10 * 60 * 1000)
+                }
+            }
+            const mailPayload = {
+                emailTo: email,
+                subject: 'SECURITY OTP',
+                htmlContent: {
+                    code, 
+                    username
+                }
+            }
+            await sendEmail(mailPayload)
+        return userData;
     }
     
     /**

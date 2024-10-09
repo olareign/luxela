@@ -32,6 +32,29 @@ class User {
         }
     }
 
+/**
+     * @description this controller takes in the body object for both seller and buyer
+     * @argument req.body.seller {email,username,picture}
+     * @argument req.body.buyer IBuyer data structure
+    */
+async signIn(req: Request, res: Response, next: NextFunction): Promise<void | any> {
+  try {
+      if(!req.body.email.includes('@')) throw new BadRequestAPIError('Submit a valid email address!')
+          else if(!req.body.role) throw new BadRequestAPIError('User role is required!')
+      
+      const data = await service.signIn(req.body)
+      return responseHandler({
+          res, 
+          StatusCodes: StatusCodes.OK,
+          message: 'User signup successfully',
+          data
+      })
+  } catch (error: Error | any) {
+      console.error('Error in signup:', error);
+      next(error)
+  }
+}
+
   async verifyOTP(
     req: Request,
     res: Response,
