@@ -197,43 +197,41 @@ export class UserService {
      * @returns user data
      * 
     */
-    public async signIn(Identifier: string){
-        const userData = await this.repository.getUserByMail(Identifier)
-        const {username, email} = userData;
-            const token = signToken(userData)
-            const isExist = await this.repository.checkExist(email)
-            if(!isExist) {
-                throw new NotFoundAPIError('User not register!')
+    public async signIn(email: string){
+        const isExist = await this.repository.checkExist(email)
+        console.log(isExist)
+        if(!isExist) {
+            throw new NotFoundAPIError('User not register!')
+        }
+        const userData = await this.repository.getUserByMail(email)
+        const {username} = userData;
+        const token = signToken(userData)
+        const code = Math.floor(1000000 + Math.random() * 999999).toString();
+        const credential = {
+            otpCode: {
+                code, 
+                exp: new Date(Date.now() + 10 * 60 * 1000)
             }
-            const code = Math.floor(1000000 + Math.random() * 999999).toString();
-            const credential = {
-                ...userData, 
-                otpCode: {
-                    code, 
-                    exp: new Date(Date.now() + 10 * 60 * 1000)
-                }
+        }
+        const mailPayload = {
+            emailTo: email,
+            subject: 'SECURITY OTP',
+            htmlContent: {
+                code, 
+                username
             }
-            const mailPayload = {
-                emailTo: email,
-                subject: 'SECURITY OTP',
-                htmlContent: {
-                    code, 
-                    username
-                }
-            }
-            await sendEmail(mailPayload)
-        return userData;
+        }
+        await sendEmail(mailPayload)
+        await this.update(userData.id, credential)
+        return {...userData, token};
     }
     
     /**
      * @description the logic for updating the user data
      * @param userId a string to fetch for user data
      * @param payload an object conataing data to update
-     * @deprecated not currently in used in this application
     */
     public async update(userId: string, payload: object){
-        console.log(userId)
-        console.log(payload)
         const result = await this.repository.update(userId, payload)
         return result;
     }

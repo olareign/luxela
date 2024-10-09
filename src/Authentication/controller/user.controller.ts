@@ -40,11 +40,11 @@ class User {
 async signIn(req: Request, res: Response, next: NextFunction): Promise<void | any> {
   try {
       if(!req.body.email.includes('@')) throw new BadRequestAPIError('Submit a valid email address!')      
-      const data = await service.signIn(req.body)
+      const data = await service.signIn(req.body.email)
       return responseHandler({
           res, 
           StatusCodes: StatusCodes.OK,
-          message: 'User signup successfully',
+          message: 'User signin successfully',
           data
       })
   } catch (error: Error | any) {
